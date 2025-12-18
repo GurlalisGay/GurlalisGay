@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Almaara Residences | HH</title>
+  <link rel="icon" type="image/x-icon" href="https://hamarahome.ae/wp-content/uploads/2025/12/HH-logogrey.png">
+  
+  <link rel="preload" as="image" href="https://hamarahome.ae/wp-content/uploads/2025/12/IMG_9372.gif" fetchpriority="high">
+  <link rel="preload" as="image" href="https://hamarahome.ae/wp-content/uploads/2025/12/1-BHK1.webp">
+  <link rel="preload" as="image" href="https://hamarahome.ae/wp-content/uploads/2025/12/2-BHK1.webp">
+  <link rel="preload" as="image" href="https://hamarahome.ae/wp-content/uploads/2025/12/3-BHK1.webp">
+  <link rel="preload" as="video" href="https://hamarahome.ae/wp-content/uploads/2025/12/IMG_9308-1.mp4">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- 1. LUXURY DESIGN SYSTEM --- */
+    :root {
+      --bg-body: #FDFBF7; 
+      --bg-card: #FFFFFF;
+      --text-main: #121212;
+      --text-muted: #666666;
+      --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 40%, #b38728 60%, #fbf5b7 100%);
+      --gold-solid: #b49b78;
+      --gold-dark: #8c7352;
+      --page-padding: 8vw;
+      --card-radius: 6px; 
+      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+      --shadow-soft: 0 20px 50px -10px rgba(0,0,0,0.06);
+      --shadow-glow: 0 20px 50px -10px rgba(191, 149, 63, 0.2);
+      --marquee-gap: 20px;
+      --marquee-img-height: 320px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body, a, button, input, select { cursor: none !important; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: 'Manrope', sans-serif;
+      overflow-x: hidden; 
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* PRELOADER */
+    #preloader {
+        position: fixed; inset: 0;
+        background: #000; z-index: 999999;
+        display: flex; justify-content: center; align-items: center;
+        transition: opacity 0.8s ease;
+    }
+    #preloader img { width: 50%; height: auto; object-fit: contain; }
+    
+    /* CURSOR */
+    .cursor-dot {
+      position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+      width: 10px; height: 10px; background-color: var(--gold-solid);
+      border-radius: 50%; z-index: 10000000; pointer-events: none;
+      box-shadow: 0 0 10px var(--gold-solid);
+    }
+    
+    .gold-particle {
+        position: fixed; pointer-events: none;
+        background: var(--gold-solid); border-radius: 50%;
+        animation: fadeOut 0.8s forwards; z-index: 9999999;
+    }
+    @keyframes fadeOut { 
+        0% { opacity: 1; transform: scale(1); }
+        100% { opacity: 0; transform: scale(0) translate(var(--tx, 0), var(--ty, 0)); } 
+    }
+
+    /* Typography */
+    h1, h2, h3, .section-heading, .card-title, .cas-title, .header-title, .lightbox-title, .nav-link, .footer-heading {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .section-heading { font-size: clamp(42px, 5vw, 56px); text-align: center; margin-bottom: 70px; }
+
+    /* NAVBAR */
+    .navbar {
+      position: fixed; top: 0; left: 0; width: 100%;
+      padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
+      z-index: 9000; transition: all 0.4s ease;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+    }
+    .navbar.scrolled { background: rgba(255, 255, 255, 0.95); padding: 15px 40px; }
+    .nav-logo-img { height: 45px; width: auto; transition: opacity 0.4s ease; }
+    .logo-dark { position: absolute; left: 40px; opacity: 0; }
+    .navbar.scrolled .logo-white { opacity: 0; }
+    .navbar.scrolled .logo-dark { opacity: 1; }
+    
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-link { color: #fff; text-decoration: none; }
+    .navbar.scrolled .nav-link { color: var(--text-main); }
+
+    /* HERO */
+    .hero { position: relative; width: 100%; height: 100vh; background: #000; }
+    .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+    .hero-content { position: absolute; z-index: 10; bottom: 8%; left: 5vw; color: #fff; }
+    .hero h1 { font-size: clamp(52px, 8vw, 120px); line-height: 1; text-transform: uppercase; }
+
+    /* CARDS */
+    .top-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 50px var(--page-padding); }
+    .top-card { background: #fff; border-radius: var(--card-radius); overflow: hidden; box-shadow: var(--shadow-soft); transition: 0.4s; }
+    .top-card:hover { transform: translateY(-10px); }
+    .top-card-image { width: 100%; height: 250px; object-fit: cover; }
+    .top-card-content { padding: 30px; text-align: center; }
+
+    /* FORMS */
+    .lightbox-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; display: none; align-items: center; justify-content: center; }
+    .lightbox-overlay.show { display: flex; }
+    .form-box { background: #fff; padding: 40px; border-radius: 8px; width: 90%; max-width: 450px; position: relative; }
+    .form-group { margin-bottom: 15px; }
+    .form-input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; }
+    .phone-group { display: flex; gap: 10px; }
+    .phone-group select { width: 100px; }
+    .form-submit { width: 100%; padding: 15px; background: var(--gold-solid); color: #fff; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    .form-submit:hover { background: var(--gold-dark); }
+    .form-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .form-close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; }
+
+    /* FOOTER & FAB */
+    .footer { background: #1a1a1a; color: #fff; padding: 60px 40px; text-align: center; }
+    .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 8000; }
+    .fab-btn { width: 60px; height: 60px; background: var(--gold-solid); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: none; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <div id="preloader">
+    <img src="https://hamarahome.ae/wp-content/uploads/2025/12/IMG_9372.gif" alt="Loading...">
+  </div>
+
+  <div class="cursor-dot"></div>
+
+  <nav class="navbar" id="navbar">
+    <a href="#hero">
+      <img src="https://hamarahome.ae/wp-content/uploads/2025/12/IMG_9340.png" class="nav-logo-img logo-white" alt="HH White">
+      <img src="https://hamarahome.ae/wp-content/uploads/2025/12/HH-logogrey.png" class="nav-logo-img logo-dark" alt="HH Dark">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#residences" class="nav-link">Residences</a></li>
+      <li><a href="#gallery" class="nav-link">Gallery</a></li>
+      <li><a href="#amenities" class="nav-link">Amenities</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero" id="hero">
+    <video muted loop playsinline autoplay>
+      <source src="https://hamarahome.ae/wp-content/uploads/2025/12/IMG_9308-1.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1>Almaara <br> Residences</h1>
+      <p style="letter-spacing: 4px; color: #b49b78;">WHERE MEMORIES RESIDE</p>
+    </div>
+  </header>
+
+  <section id="residences" style="padding: 100px 0;">
+    <h2 class="section-heading">Curated Residences</h2>
+    <div class="top-cards">
+      <div class="top-card">
+        <img src="https://hamarahome.ae/wp-content/uploads/2025/12/1-BHK1-scaled.png" class="top-card-image" alt="1 BHK">
+        <div class="top-card-content">
+          <h3>1 BHK</h3>
+          <p>From AED 1.19M</p>
+          <button class="form-submit" style="margin-top:20px;" onclick="openBrochureForm()">Download Brochure</button>
+        </div>
+      </div>
+      <div class="top-card">
+        <img src="https://hamarahome.ae/wp-content/uploads/2025/12/2-BHK1-scaled.png" class="top-card-image" alt="2 BHK">
+        <div class="top-card-content">
+          <h3>2 BHK</h3>
+          <p>From AED 1.75M</p>
+          <button class="form-submit" style="margin-top:20px;" onclick="openBrochureForm()">Download Brochure</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="fab-container">
+    <button onclick="openForm()" class="fab-btn">✉</button>
+  </div>
+
+  <div id="contactFormOverlay" class="lightbox-overlay">
+    <div class="form-box">
+      <span class="form-close-btn" onclick="closeForm()">×</span>
+      <h3 id="formTitle" style="margin-bottom: 20px; text-align: center;">Enquire Now</h3>
+      
+      <form id="mainForm" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <input type="text" id="fullname" class="form-input" placeholder="Full Name" required>
+        </div>
+        
+        <div class="form-group">
+          <input type="email" id="email" class="form-input" placeholder="Email Address" required>
+        </div>
+
+        <div class="form-group phone-group">
+            <select id="countryCode" class="form-input" style="width: 120px;">
+                <option value="+971" selected>🇦🇪 +971</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+91">🇮🇳 +91</option>
+            </select>
+            <input type="tel" id="phone" class="form-input" placeholder="Phone Number" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" id="country" class="form-input" placeholder="Country of Residence" required>
+        </div>
+
+        <button type="submit" id="submitBtn" class="form-submit">Submit Interest</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 Almaara Residences. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // --- 1. CORE UI LOGIC ---
+    let downloadMode = false;
+
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById('preloader').style.opacity = '0';
+        setTimeout(() => document.getElementById('preloader').style.display = 'none', 800);
+      }, 2000);
+    };
+
+    window.onscroll = () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+
+    window.openForm = () => {
+      downloadMode = false;
+      document.getElementById('formTitle').innerText = "Enquire Now";
+      document.getElementById('submitBtn').innerText = "Submit Interest";
+      document.getElementById('contactFormOverlay').classList.add('show');
+    };
+
+    window.openBrochureForm = () => {
+      downloadMode = true;
+      document.getElementById('formTitle').innerText = "Download Brochure";
+      document.getElementById('submitBtn').innerText = "Download Now";
+      document.getElementById('contactFormOverlay').classList.add('show');
+    };
+
+    window.closeForm = () => {
+      document.getElementById('contactFormOverlay').classList.remove('show');
+    };
+
+    // --- 2. API INTEGRATION (VERCEL) ---
+    window.handleFormSubmit = async function(e) {
+        e.preventDefault();
+        
+        // YOUR LIVE VERCEL LINK
+        const VERCEL_API_URL = "https://gurlalis-gay.vercel.app/api/vercelApiHH"; 
+        
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // Prepare Data
+        const formData = {
+            fullname: document.getElementById('fullname').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('countryCode').value + " " + document.getElementById('phone').value,
+            country: document.getElementById('country').value,
+            message: downloadMode ? "Brochure download request" : "General Inquiry",
+            type: downloadMode ? "BROCHURE" : "INQUIRY"
+        };
+
+        // Loading 
+        submitBtn.innerText = "SENDING...";
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch("https://gurlalis-gay.vercel.app/api/vercelApiHH", {
+                method: 'POST',
+                mode: 'cors', // Crucial for cross-domain requests
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                if (downloadMode) {
+                    window.open('https://hamarahome.ae/wp-content/uploads/2025/04/Almaara-Brochure-z.pdf', '_blank');
+                } else {
+                    alert('Success! We will contact you shortly.');
+                }
+                closeForm();
+                e.target.reset();
+            } else {
+                throw new Error(result.error || "Failed to send");
+            }
+        } catch (err) {
+            alert("Error: " + err.message);
+        } finally {
+            submitBtn.innerText = downloadMode ? "Download Now" : "Submit Interest";
+            submitBtn.disabled = false;
+        }
+    };
+
+    // --- 3. CURSOR LOGIC ---
+    const cursor = document.querySelector('.cursor-dot');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      
+      const p = document.createElement('div');
+      p.className = 'gold-particle';
+      p.style.left = e.clientX + 'px';
+      p.style.top = e.clientY + 'px';
+      p.style.width = p.style.height = Math.random() * 5 + 'px';
+      p.style.setProperty('--tx', (Math.random()-0.5)*40 + 'px');
+      p.style.setProperty('--ty', (Math.random()-0.5)*40 + 'px');
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 800);
+    });
+  </script>
+</body>
+</html>
